@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         rotate.setOnClickListener(view -> {
             switch (gameView.getStatus()){
                 case 0:
+                    score.setText("0");
                     status.setText("");
                     tip.setText("");
                     gameView.reset();
