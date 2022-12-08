@@ -160,7 +160,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
             mCanvas = mSurfaceHolder.lockCanvas();
             //绘制背景
             mCanvas.drawColor(Color.WHITE);
-            mCanvas.drawRoundRect(start_x,start_y,h_w+6*e,h_h+12*e,20,20,mPaint);
+            mCanvas.drawRoundRect(start_x-2,start_y,h_w+6*e+2,h_h+12*e+2,20,20,mPaint);
             if (panel.getStatus() == 1){
                 for (int i = 0;i < 12;i++){
                     for (int j = 4;j < 28;j++){
@@ -188,17 +188,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(5);
+        paint.setStrokeWidth(0);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         mCanvas.drawRoundRect(start_x+x*e,start_y+y*e,start_x+(x+1)*e,start_y+(y+1)*e,20,20,paint);
     }
 
     private void drawCombination(Blocks blocks,int color){
-        Paint paint = new Paint();
-        paint.setColor(color);
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         for (int i=0;i<blocks.getBlocks().length;i++){
             for (int j=0;j<blocks.getBlocks()[i].length;j++){
                 if (blocks.y+j > 3 && blocks.getBlocks()[i][j] == 1) {
