@@ -14,7 +14,7 @@ public class BlockScreen extends SurfaceView implements SurfaceHolder.Callback, 
     //绘图的Canvas
     private Canvas mCanvas;
     //子线程标志位
-    private boolean mIsDrawing;
+    private boolean mIsDrawing,outline;
     private int gap = 5, e, color;
     private Blocks blocks;
     public BlockScreen(Context context) {
@@ -78,6 +78,20 @@ public class BlockScreen extends SurfaceView implements SurfaceHolder.Callback, 
         paint.setAntiAlias(true);
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        draw(x,y,paint);
+        if (outline)drawOutline(x,y);
+    }
+
+    private void drawOutline(int x,int y){
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(1);
+        paint.setStyle(Paint.Style.STROKE);
+        draw(x,y,paint);
+    }
+
+    private void draw(int x,int y,Paint paint){
         mCanvas.drawRoundRect(gap+x*e,gap+y*e,gap+(x+1)*e,gap+(y+1)*e,15,15,paint);
     }
 
@@ -102,6 +116,10 @@ public class BlockScreen extends SurfaceView implements SurfaceHolder.Callback, 
 
     public void setBlocks(Blocks blocks) {
         this.blocks = blocks;
+    }
+
+    public void setOutline(boolean outline) {
+        this.outline = outline;
     }
 
     /**

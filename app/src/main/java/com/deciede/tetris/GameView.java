@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,7 +17,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     //绘图的Canvas
     private Canvas mCanvas;
     //子线程标志位
-    private boolean mIsDrawing;
+    private boolean mIsDrawing, outline;
     private int start_x,start_y,h_w,h_h,e;
     private final BlockPanel panel;
     private final Paint mPaint;
@@ -95,6 +94,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
     public void setBlockScreen(BlockScreen blockScreen) {
         fallBlocks.setBlockScreen(blockScreen);
+    }
+
+    public boolean isOutline() {
+        return outline;
+    }
+
+    public void setOutline(boolean outline) {
+        this.outline = outline;
+        fallBlocks.setOutline(outline);
     }
 
     public int getStatus(){
@@ -190,6 +198,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         paint.setAntiAlias(true);
         paint.setStrokeWidth(0);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        draw(x,y,paint);
+        if (outline)drawOutline(x, y);
+    }
+
+    private void drawOutline(int x,int y){
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(1);
+        paint.setStyle(Paint.Style.STROKE);
+        draw(x,y,paint);
+    }
+
+    private void draw(int x,int y,Paint paint){
         mCanvas.drawRoundRect(start_x+x*e,start_y+y*e,start_x+(x+1)*e,start_y+(y+1)*e,20,20,paint);
     }
 

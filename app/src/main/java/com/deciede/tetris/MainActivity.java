@@ -3,7 +3,8 @@ package com.deciede.tetris;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private boolean outline;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 right = findViewById(R.id.right),
                 left = findViewById(R.id.left),
                 pause = findViewById(R.id.pause);
+        ImageButton setting = findViewById(R.id.setting);
         TextView score = findViewById(R.id.score);
         TextView status = findViewById(R.id.status);
         TextView tip = findViewById(R.id.tip);
@@ -47,8 +51,26 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        SharedPreferences sharedPreferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+        if (!sharedPreferences.contains("outline")){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("draw_edge");
+            editor.putBoolean("outline",false);
+            editor.apply();
+        }else {
+            outline = sharedPreferences.getBoolean("outline",false);
+            gameView.setOutline(outline);
+        }
         gameView.setBlockScreen(screen);
         gameView.setActivityHandle(handler);
+
+        setting.setOnClickListener(view -> {
+            outline = !outline;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("outline", outline);
+            editor.apply();
+            gameView.setOutline(outline);
+        });
 
         rotate.setOnClickListener(view -> {
             switch (gameView.getStatus()){
@@ -90,12 +112,12 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     gameView.pause();
                     status.setText("游戏暂停");
-                    pause.setImageResource(android.R.drawable.ic_media_play);
+                    pause.setImageResource(R.drawable.play);
                     break;
                 case 2:
                     gameView.play();
                     status.setText("");
-                    pause.setImageResource(android.R.drawable.ic_media_pause);
+                    pause.setImageResource(R.drawable.pause);
                     break;
             }
         });

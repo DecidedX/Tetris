@@ -104,6 +104,10 @@ public class FallBlocks {
         this.blockScreen = blockScreen;
     }
 
+    public void setOutline(boolean outline){
+        blockScreen.setOutline(outline);
+    }
+
     public void reset(){
         blocks = Blocks.getRandom();
         next_b = Blocks.getRandom();
