@@ -76,7 +76,7 @@ public class BlockScreen extends SurfaceView implements SurfaceHolder.Callback, 
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(5);
+        paint.setStrokeWidth(0);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         draw(x,y,paint);
         if (outline)drawOutline(x,y);
@@ -96,11 +96,6 @@ public class BlockScreen extends SurfaceView implements SurfaceHolder.Callback, 
     }
 
     private void drawCombination(Blocks blocks,int color){
-        Paint paint = new Paint();
-        paint.setColor(color);
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         for (int i=0;i<blocks.getBlocks().length;i++){
             for (int j=0;j<blocks.getBlocks()[i].length;j++){
                 if (blocks.getBlocks()[i][j] == 1) {
